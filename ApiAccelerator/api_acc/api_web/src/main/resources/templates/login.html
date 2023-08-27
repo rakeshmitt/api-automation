@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head lang="en">
+<title>API Accelerator Solution</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Added to remove the 404 error in browser console for favicon -->
+<link rel="shortcut icon" href="">
+<link rel="stylesheet" type="text/css"
+	th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<style>
+div.hidden {
+	display: none;
+}
+</style>
+</head>
+<body>
+<form name="loginForm" id="loginForm" th:action="@{/login}" method="post">
+		<div class="row banners">
+			<div class="col-9 text row justify-content-center align-items-center">AAP Platform</div>
+			<div class="col-2">
+				<img id="img-overview"
+					src="../static/images/NTT-DATA-Logo-White.gif"
+					th:src="@{/images/NTT-DATA-Logo-White.gif}" alt="overview" />
+			</div>
+		</div>
+
+		<div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" th:action="@{/login}" method="post">
+                            <h3 class="text-center text-info"></h3>
+                            <br/>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Username:</label><br>
+                                <input type="text" name="username" id="username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Password:</label><br>
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+			                
+							<!-- <div th:if="${session.containsKey('errorMessage')} and ${session.errorMessage != null} and ${session.errorMessage !='' }" 
+							th:text="${session.errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+								Invalid Username or Password..!
+							</div> -->
+							
+							<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+								Invalid Username or Password..!
+							</div>			                
+							
+							<div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show" role="alert">
+								You have been successfully logged out.
+							</div>
+							
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                <button th:type="submit" class="btn btn-primary" id="loginBtn">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+			<!-- Footer -->
+		<footer class="page-footer font-small blue fixed-bottom">
+			<!-- Copyright -->
+			<div class="footer text-center">
+				© 2020 Copyright: <a href=""> </a>
+			</div>
+			<!-- Copyright -->
+		</footer>
+		<!-- Footer -->
+        </form>
+    <script type="text/javascript"
+		th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/login.js}"></script>
+  </body>
+</html>

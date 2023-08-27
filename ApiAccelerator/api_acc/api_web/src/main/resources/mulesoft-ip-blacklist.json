@@ -1,0 +1,10 @@
+{
+"policyTemplateId":"ip-blacklist",
+    "configurationData":{ 
+       "ipExpression":"#[message.inboundProperties['X-Forwarded-For']]",
+       "ips":[ 
+          "127.0.0.1/100",
+          "192.1.1.1/100"
+       ]
+    }
+}

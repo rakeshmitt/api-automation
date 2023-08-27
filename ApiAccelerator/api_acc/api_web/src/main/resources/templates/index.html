@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head lang="en">
+<title>API Accelerator Solution</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<style>
+div.hidden {
+	display: none;
+}
+</style>
+</head>
+<body>
+	<form id="apiForm" th:action="@{/upload}" method="post"
+		enctype="multipart/form-data" th:object="${product}">
+
+		<!-- <div class="jumbotron text-center">
+  		<h3>NTT DATA - AAP Platform</h3>
+	</div> -->
+
+
+		<div class="row banners">
+			<div class="col-9 text">AAP Platform</div>
+			<div class="col-2">
+				<img id="img-overview"
+					src="../static/images/NTT-DATA-Logo-White.gif"
+					th:src="@{/images/NTT-DATA-Logo-White.gif}" alt="overview" />
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<nav id="sidebar">
+					<ul class="list-unstyled components">
+						<li>
+							<div sec:authorize="isAuthenticated()">Welcome <b><span sec:authentication="name"></span></b></div>
+						</li>
+
+						<li><a href="/api" onclick="showHome()">
+								<i class="fas fa-briefcase"></i> Home
+						</a></li>
+						<li><a href="/api/#"
+							onclick="showOverview()"> <i class="fas fa-briefcase"></i>
+								Overview
+						</a></li>
+						<li>
+							<a th:href="@{/logout}"><i class="fas fa-briefcase"> </i> 
+								Logout
+							</a>
+						</li>
+					</ul>
+
+				</nav>
+
+				<div class="col-sm-10" id="productForm">
+					<div class="form-group">
+						<label for="productName">Product Name:</label>
+						<!--  <input type="productName" class="form-control" id="productName">-->
+						<div class="dropdown">
+							<select name="productName" id="productName"
+								class="custom-select-sm" onchange="displayProductField()">
+								<option selected="selected" value="select">Select</option>
+								<option th:each="item: ${productNames}" th:value="${item}"
+									th:text="${item}"></option>
+							</select>
+						</div>
+					</div>
+					<div id="mulesoft" class="hidden">
+						<div class="form-group">
+							<label for="prodVersion">Mule API Gateway Version:</label>
+							<div class="dropdown">
+								<select name="version" id="muleProdVersion"
+									class="custom-select-sm">
+									<option th:each="version: ${muleApiGatewayVersions}" th:value="${version}"
+									th:text="${version}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="muleOrgId">Organization ID:</label>
+							<div class="col-sm-6">
+								<input class="form-control" th:name="muleOrgId" id="muleOrgId"
+									 th:placeholder="${product.muleOrgId}"
+									  data-toggle="tooltip" 
+									  title="Extract Organization ID by clicking on the 'Gear' icon at the top navigation bar, and then select 'Organization' from the left side menu"
+									  data-placement="bottom"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="muleEnvId">Environment ID:</label>
+							<div class="col-sm-6">
+								<input class="form-control" th:name="muleEnvId" id="muleEnvId"
+									th:placeholder="${product.muleEnvId}"
+									data-toggle="tooltip"
+									data-placement="bottom" 
+									title="Go to Access Management -> Environments. Hover over each environment name, and the URL that shows has the environment ID at the end"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="muleUsername">Username:</label>
+							<div class="col-sm-6">
+								<input class="form-control" th:name="muleUsername"
+									id="muleUsername" th:value="${product.muleUsername}" autocomplete="chrome-off"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="mulePassword">Password:</label>
+							<div class="col-sm-6">
+								<input type="password" class="form-control"
+									th:name="mulePassword" id="mulePassword"
+									th:value="${product.mulePassword}" autocomplete="chrome-off"/>
+							</div>
+						</div>
+						<br/>
+						<div class="form-group" id="muleDeployChoice">
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" class="custom-control-input"
+									th:name="muleApiDeployDecision" id="muleCreateOnly"  th:value="muleCreateOnly"> <label
+									class="custom-control-label" for="muleCreateOnly">Create
+									API Instance Only</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" class="custom-control-input"
+									th:name="muleApiDeployDecision" id="muleCreateAndDeploy" th:value="muleCreateAndDeploy"> <label
+									class="custom-control-label" for="muleCreateAndDeploy">Create
+									API Instance And Deploy</label>
+							</div>
+						</div>
+
+						<div id="muleDeployElements" class="hidden">
+							<!-- <label for="deployEnv">Choose the Deployment Environment</label>
+							<br />
+							<div class="form-group">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input"
+										th:name="muleDeploymentEnv" id="sandbox" value="Sandbox"> <label
+										class="custom-control-label" for="sandbox">Sandbox</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" class="custom-control-input"
+										th:name="muleDeploymentEnv" id="design" value="Design"> <label
+										class="custom-control-label" for="design">Design</label>
+								</div>
+							</div> -->
+
+							<!-- <div class="form-group">
+								<label for="gatewyVersion">Gateway Version</label>
+								<div class="col-sm-6">
+									<input class="form-control" th:name="gatewayVersion"
+										id="gatewayVersion" th:value="${product.gatewayVersion}" />
+								</div>
+							</div> -->
+							<div class="form-group">
+							<div class="col-sm-6">
+								<input type="hidden" class="form-control"
+									th:name="deploymentType" id="deploymentType"
+									th:value="${product.deploymentType}" />
+							</div>
+						</div>
+							
+							
+						</div>
+					</div>
+					<div id="aws" class="hidden">
+						<div class="form-group">
+							<label for="prodVersion">Product Version:</label>
+							<div class="dropdown">
+								<select name="version" id="awsProdVersion"
+									class="custom-select-sm">
+									<option>1.0</option>
+									<option>1.1</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="awsAccessKey">Access Key:</label>
+							<div class="col-sm-6">
+								<input type="password" class="form-control"
+									th:name="awsAccessKey" id="awsAccessKey"
+									th:value="${product.awsAccessKey}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="awsSecretKey">Secret Key:</label>
+							<div class="col-sm-6">
+								<input type="password" class="form-control"
+									th:name="awsSecretKey" id="awsSecretKey"
+									th:value="${product.awsSecretKey}" />
+							</div>
+						</div>
+						<!-- <div class="form-group">
+						<label for="awsRegionName">Region Name:</label>
+						<div class="col-sm-6">
+							<input class="form-control" th:name="awsRegionName" id="awsRegionName" />
+						</div>
+    				</div> -->
+    				 
+    				<div class="form-group" id="awsDeployChoice">
+						<div class="custom-control custom-radio custom-control-inline">
+							<input type="radio" class="custom-control-input"
+									th:name="awsApiDeployDecision" id="awsCreateOnly"  th:value="awsCreateOnly"> <label
+									class="custom-control-label" for="awsCreateOnly">Create
+									API Instance Only</label>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" class="custom-control-input"
+									th:name="awsApiDeployDecision" id="awsCreateAndDeploy" th:value="awsCreateAndDeploy"> <label
+									class="custom-control-label" for="awsCreateAndDeploy">Create
+									API Instance And Deploy</label>
+						</div>
+					</div>
+					</div>
+					<div class="form-group">
+						<label for="file">Template File:</label>
+						<div class="custom-file mb-3">
+							<input type="file" class="custom-file-input" id="file"
+								th:name="file" name="filename"> <label
+								class="custom-file-label" for="file">Choose API Template
+								File.....</label>
+						</div>
+					</div>
+					
+					<br/>
+					
+					<div class="form-group">
+						<button th:type="submit" class="btn btn-primary" id="ajaxBtn">Generate
+							API Proxy</button>
+					</div>
+				</div>
+
+				<!-- Section for Showing Overview -->
+				<div id="overview" style="display: none;">
+					<img id="img-overview" src="../static/images/api_overview-v2.jpg"
+						th:src="@{/images/api_overview-v2.jpg}" alt="overview" />
+				</div>
+
+			</div>
+		</div>
+		<div id="spinner" class="spinner" style="display: none;">
+			<img id="img-spinner" th:src="@{/images/ajax-loader.gif}"
+				alt="Loading" />
+		</div>
+		
+		<div>
+			<div id="apiResponse" th:if="${success}" class="footer"
+				align="center">
+				<b> <font color="green" style="font-family: sans-serif;">
+						<th:block th:text="${success}" />
+				</font>
+				</b>
+			</div>
+		</div>
+
+		<div class="modal fade" id="verifyModal" tabindex="-1" role="dialog"
+			aria-labelledby="verifyModalLabel" aria-hidden="false">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h6>API Resposne</h6>
+					</div>
+					<div class="modal-body" align="center"></div>
+
+
+					<div class="modal-footer">
+
+						<button style="outline: none;" type="button" class="close"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true"><small
+								style="color: navy; font-size: 15px;"><b>Close</b></small></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 
+<div class="embed-responsive embed-responsive-16by9">
+<p><iframe height="600" id="myPDF" th:src="@{'https://view.officeapps.live.com/op/embed.aspx?'+/images/API_Policy_Info_Capture_Template1.5.xlsx}" width="100%"></iframe></p>
+</div>
+<iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://www.learningaboutelectronics.com/Articles/Example.xlsx' width='100%' height='565px' frameborder='0'> </iframe>
+-->
+
+		<!-- Footer -->
+		<footer class="page-footer font-small blue fixed-bottom">
+			<!-- Copyright -->
+			<div class="footer text-center">
+				© 2020 Copyright: <a href=""></a>
+			</div>
+			<!-- Copyright -->
+		</footer>
+		<!-- Footer -->
+	</form>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/select.js}"></script>
+	<script type="text/javascript" th:src="@{/js/ajaxRequest.js}"></script>
+
+</body>
+</html>

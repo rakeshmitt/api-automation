@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<h1>AAP - Upload Status</h1>
+
+<!-- Map<String, List<Map<String, String>>> -->
+
+
+<table border=1>
+    <tr th:each="element : ${policyMap}">
+        <td th:text="${element.key}" />
+        <table border="3">
+            <tr th:each="parameter : ${element.value}">
+                <td th:text="${parameter}">Param Value = ${parameter}</td>
+            </tr>
+        </table>
+    </tr>
+</table>
+
+</body>
+</html>

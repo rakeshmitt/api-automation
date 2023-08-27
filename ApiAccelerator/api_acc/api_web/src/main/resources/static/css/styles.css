@@ -1,0 +1,180 @@
+.banners{
+	background-color: rgb(103,133,193);
+	top: 180px;
+	text-align: center!important;
+	border-bottom-color: black;
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 0rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+}
+
+.overviewX {
+	position:absolute;
+	top: 50%;
+	left: 50%;
+	
+}
+#img-overview{
+	position:absolute;
+	width: 80%; /* width of the spinner gif */
+    height: 82%; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+.error {
+  color: #F00;
+  background-color: #FFF;
+}
+
+.text {
+  z-index: 100;
+  position: inherit;
+  color: white;
+  font-family:Arial;
+  font-size: 48px;
+  /* font-weight: bold; */
+  left: 150px;
+  top: 350px;
+  
+}
+
+#leftPanel{
+	color: rgb(0,128,177); 
+	background-color: rgb(0,128,177);
+	z-index: 100;
+  	position: inherit;
+  	color: white;
+  	font-size: 18px;
+  	border: 1px;
+}
+
+#leftPanel a {
+	color: white;
+}
+
+.col-sm-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+}
+
+.col-sm-10X{
+	position: relative;
+    width: 10%;
+   /*  padding-right: 15px;
+    padding-left: 15px; */
+}
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(103,133,193); 
+  color:#fff;
+  position: relative;
+  clear:both;
+}
+
+/*All Side Bar*/
+
+
+#sidebar {
+    min-width: 30vh;
+    max-width: 250px;
+	min-height: 85vh;
+}
+
+
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    /* background: #7386D5; */
+    background: rgb(0,128,177); 
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    /* background: #6d7fcc; */
+    background: rgb(0,128,177); 
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    /* color: #7386D5; */
+    color: rgb(0,128,177); 
+    background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    /* background: #6d7fcc; */
+    background: rgb(0,128,177); 
+}
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    /* background: #6d7fcc; */
+    background: rgb(0,128,177); 
+}
+
+
+
+
